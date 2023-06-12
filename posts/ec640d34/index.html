@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="/MyBlog/fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="/MyBlog/fontawesome/css/brands.css" rel="stylesheet">
+<link href="/MyBlog/fontawesome/css/solid.css" rel="stylesheet">
+<script src="/MyBlog/js/color.global.min.js" ></script>
+<script src="/MyBlog/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>以「依賴注入」的精神對抗老闆反覆無常的修改需求 | Tsubame 圖文窩</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、前言現代軟體開發中，依賴注入(Dependency Injection)逐漸成為顯學，微軟甚至在 .NET Core中大量地仰賴依賴注入。在傳統開發過程中，相信一定有很多人遇到在程式碼中建立一個實例並使用它，結果今天老闆叫你把這些實例通通換成另外一個，這下子慘了，我們得一個一個去修。 為了解決這樣的問題，實踐「鬆耦合」與「代碼重用性」，依賴注入這個概念被提出來了。「依賴」是指接收方所需的對象。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以「依賴注入」的精神對抗老闆反覆無常的修改需求">
+<meta property="og:url" content="https://bensontien.github.io/MyBlog/posts/ec640d34/index.html">
+<meta property="og:site_name" content="Tsubame 圖文窩">
+<meta property="og:description" content="一、前言現代軟體開發中，依賴注入(Dependency Injection)逐漸成為顯學，微軟甚至在 .NET Core中大量地仰賴依賴注入。在傳統開發過程中，相信一定有很多人遇到在程式碼中建立一個實例並使用它，結果今天老闆叫你把這些實例通通換成另外一個，這下子慘了，我們得一個一個去修。 為了解決這樣的問題，實踐「鬆耦合」與「代碼重用性」，依賴注入這個概念被提出來了。「依賴」是指接收方所需的對象。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1678284659393.jpg">
+<meta property="article:published_time" content="2023-06-12T11:55:05.000Z">
+<meta property="article:modified_time" content="2023-06-12T12:07:14.201Z">
+<meta property="article:author" content="Tsubame">
+<meta property="article:tag" content="技術文章">
+<meta property="article:tag" content="軟體開發">
+<meta property="article:tag" content="C#">
+<meta property="article:tag" content="依賴注入">
+<meta property="article:tag" content="Dependency Injection">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1678284659393.jpg">
+  
+    <link rel="alternate" href="/MyBlog/" title="Tsubame 圖文窩" >
+  
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/MyBlog/css/style.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="google-site-verification" content="aqsfzf-v0RqK0UjgZELfedhmmhqRD4YUH7RHzeBEFZc" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EFGFLKCGYD"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EFGFLKCGYD');
+</script>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="/MyBlog/images/banner2023.jpg" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="shadow   ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/MyBlog/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Tsubame 圖文窩 </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/MyBlog/index">Home</a>
+    
+      <a class="main-nav-link" href="/MyBlog/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/MyBlog/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="material-symbols-rounded light-mode-icon">wb_sunny</span>
+      <span class="material-symbols-rounded dark-mode-icon">dark_mode</span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/MyBlog/" title="RSS Feed">
+        <span class="material-symbols-rounded rss">rss_feed</span>
+      </a>
+    
+    <a id="nav-search-btn" class="nav-icon" title="搜尋" style="display: none;">
+      <span class="material-symbols-rounded">search</span>
+    </a>
+    <div id="nav-menu-btn" class="nav-icon">
+      <span class="material-symbols-rounded">menu</span>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/MyBlog/index">Home</a>
+    
+      <a class="nav-dropdown-link" href="/MyBlog/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/MyBlog/about">About</a>
+    
+    
+      <a class="nav-dropdown-link" href="/MyBlog/" title="RSS Feed">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/MyBlog/images/avatar2022.png></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">Tsubame </div>
+      <div class="dot"></div>
+      <div class="subtitle">在科技業寫術式的魔法師，偶爾兼職畫點插圖，寫寫雜談、影評、技術文章，宣揚百合文化 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://twitter.com/tsubame0405" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://www.pixiv.net/users/7449941" title="Pixiv"><i class="fa-brands fa-p"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/bensontien" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">分類</h3>
+      <div class="category-box">
+            <a class="category-link" href="/MyBlog/categories/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/">
+                技術文章
+                <div class="category-count">1</div>
+            </a>
+        <div class="children"><div class="category-box">
+            <a class="category-link" href="/MyBlog/categories/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/">
+                軟體開發
+                <div class="category-count">1</div>
+            </a>
+        </div></div>
+            <a class="category-link" href="/MyBlog/categories/%E5%85%AC%E5%91%8A/">
+                公告
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/MyBlog/categories/%E7%99%BE%E5%90%88/">
+                百合
+                <div class="category-count">8</div>
+            </a>
+        <div class="children"><div class="category-box">
+            <a class="category-link" href="/MyBlog/categories/%E7%99%BE%E5%90%88/%E5%B0%91%E5%A5%B3%E6%AD%8C%E5%8A%87/">
+                少女歌劇
+                <div class="category-count">4</div>
+            </a>
+        
+            <a class="category-link" href="/MyBlog/categories/%E7%99%BE%E5%90%88/%E7%99%BE%E5%90%88%E9%87%8B%E7%96%91/">
+                百合釋疑
+                <div class="category-count">4</div>
+            </a>
+        </div></div></div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">標籤</h3>
+      <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/Dependency-Injection/" rel="tag">Dependency Injection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/S%E5%B0%8F%E8%AA%AA/" rel="tag">S小說</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E4%BE%9D%E8%B3%B4%E6%B3%A8%E5%85%A5/" rel="tag">依賴注入</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E5%85%AC%E5%91%8A/" rel="tag">公告</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E5%8B%95%E6%BC%AB%E6%96%87%E5%8C%96/" rel="tag">動漫文化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E5%8F%A4%E5%B7%9D%E7%9F%A5%E5%AE%8F/" rel="tag">古川知宏</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E5%A5%B3%E5%90%8C%E6%96%87%E5%AD%B8/" rel="tag">女同文學</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E5%B0%91%E5%A5%B3%E6%AD%8C%E5%8A%87/" rel="tag">少女歌劇</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/" rel="tag">技術文章</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E6%95%99%E6%9C%83%E5%AD%B8%E6%A0%A1/" rel="tag">教會學校</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E7%99%BE%E5%90%88/" rel="tag">百合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E7%99%BE%E5%90%88%E4%BD%9C%E5%93%81%E5%8F%97%E7%9C%BE/" rel="tag">百合作品受眾</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E8%BB%8D%E6%AD%A6%E5%B0%91%E5%A5%B3/" rel="tag">軍武少女</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/" rel="tag">軟體開發</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">彙整</h3>
+      
+      
+        <a class="archive-link" href="/MyBlog/archives/2023/06 ">
+          六月 2023 
+          <div class="archive-count">10 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">最新文章</h3>
+      <ul>
+        
+          <li>
+            <a href="/MyBlog/posts/ec640d34/">以「依賴注入」的精神對抗老闆反覆無常的修改需求</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/2e7b61d5/">【少女歌劇】彼此的追逐與彼此的陪伴</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/63fab05/">【少女歌劇】群像劇舞台的再生產</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/4e99bb10/">【少女歌劇】高塔的詮釋</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/b1876362/">【少女歌劇】監督古川知宏的美學</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/96c1489c/">【百合釋疑】百合與軍武少女</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/987fd3ca/">【百合釋疑】百合與教會學校</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/2c30fb46/">【百合釋疑】百合與女同文學</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/91024c10/">【百合釋疑】百合作品的受眾族群</a>
+          </li>
+        
+          <li>
+            <a href="/MyBlog/posts/415d96e1/">個人部落格開張</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+<article id="post-以「依賴注入」的精神對抗老闆反覆無常的修改需求" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        以「依賴注入」的精神對抗老闆反覆無常的修改需求
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-06-12T11:55:05.000Z" itemprop="datePublished">2023-06-12</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/MyBlog/categories/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/">技術文章</a>><a class="meta-cate-link" href="/MyBlog/categories/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/">軟體開發</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            1.2k 詞 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/Dependency-Injection/" rel="tag">Dependency Injection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E4%BE%9D%E8%B3%B4%E6%B3%A8%E5%85%A5/" rel="tag">依賴注入</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/" rel="tag">技術文章</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/" rel="tag">軟體開發</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>現代軟體開發中，依賴注入(Dependency Injection)逐漸成為顯學，微軟甚至在 .NET Core中大量地仰賴依賴注入。在傳統開發過程中，相信一定有很多人遇到在程式碼中建立一個實例並使用它，結果今天老闆叫你把這些實例通通換成另外一個，這下子慘了，我們得一個一個去修。</p>
+<p>為了解決這樣的問題，實踐「鬆耦合」與「代碼重用性」，依賴注入這個概念被提出來了。「依賴」是指接收方所需的對象。「注入」是指將「依賴」傳遞給接收方的過程。</p>
+<p>詳細關於「依賴注入」的介紹，可以參考以下大神們的分享:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/wenchin-rolls-around/%E6%B7%BA%E5%85%A5%E6%B7%BA%E5%87%BA-dependency-injection-ea672ba033ca">淺入淺出 Dependency Injection</a></li>
+<li><a target="_blank" rel="noopener" href="https://igouist.github.io/post/2021/11/newbie-6-dependency-injection/">菜雞新訓記 (6): 使用 依賴注入 (Dependency Injection) 來解除強耦合吧</a></li>
+</ul>
+<p>而我個人認為「依賴注入」的精華就在於「建立鬆動的關係」，那麼依循這個概念，我們其實也不用寫得非常複雜，也能建立有著依賴注入精神的程式碼。</p>
+<h2 id="二、實作"><a href="#二、實作" class="headerlink" title="二、實作"></a>二、實作</h2><p>我們這邊用C#做舉例，在這例子中，我們有兩個Repo類別、兩個Service類別，一般來說如果我們想要在程式碼中使用這四個類別，我們會這樣寫:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ARepo aRepo = <span class="keyword">new</span> ARepo(); </span><br><span class="line">BRepo aRepo = <span class="keyword">new</span> BRepo(); </span><br><span class="line">AService aService = <span class="keyword">new</span> AService(); </span><br><span class="line">BService aService = <span class="keyword">new</span> BService(); </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>這是我們平常依賴實例的寫法，比較複雜一點的話可能會用到多型，但都是依賴著某個實例。</p>
+<p>接著我們就會在程式碼中使用這幾個類別中的Method做我們想要做的事情，而當這幾個類別常常被實例在不同地方時，我們會發現怎麼好像到處都在new，不過不影響程式運行所以就不管了。</p>
+<p><img src="https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1678284659393.jpg"></p>
+<p>結果有一天，老闆要我們把ARepo換成ARepoV2，完蛋了有好多地方得改，又怕交給IDE一次修改會改到不該改的地方。</p>
+<p>那麼能不能有個小容器，能讓我們儲存這幾個類別的關係，然後讓我們需要更替類別時，只要更換容器裡面的關係就可以了?</p>
+<p>這時候就得請出我們的老面孔 <strong>介面(Interface)</strong> 了。首先我們得先為原本的類別建立介面，分別為IARepo、IBRepo、IAService、IBService。</p>
+<p>接著寫一個簡單的小容器:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">ProjectA.Tools</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title">MyContainerSingleton</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> MyContainerSingleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Repo</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> A的Repo介面</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="keyword">public</span> Type IARepo;</span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> B的Repo介面</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="keyword">public</span> Type IBRepo;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Service</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> A的Service介面</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="keyword">public</span> Type IAService;</span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> B的Service介面</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="keyword">public</span> Type IBService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="title">MyContainerSingleton</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//Repo</span></span><br><span class="line">            <span class="keyword">this</span>.IARepo = <span class="keyword">typeof</span>(ARepo);</span><br><span class="line">            <span class="keyword">this</span>.IBRepo = <span class="keyword">typeof</span>(BRepo);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//Service</span></span><br><span class="line">            <span class="keyword">this</span>.IAService = <span class="keyword">typeof</span>(AService);</span><br><span class="line">            <span class="keyword">this</span>.IBService = <span class="keyword">typeof</span>(BService);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 提供單例</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MyContainerSingleton <span class="title">GetInstance</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (uniqueInstance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                uniqueInstance = <span class="keyword">new</span> MyContainerSingleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> uniqueInstance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們透過MyContainerSingleton建立了介面與類別的關係，並且提供單例，不讓程式碼實例一堆重複的東西。接著我們就在原先使用這幾個類別的程式碼中，改寫成下列的樣子:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span> IARepo _IARepo;</span><br><span class="line"><span class="keyword">private</span> IBRepo _IBRepo;</span><br><span class="line"><span class="keyword">private</span> IAService _IAService;</span><br><span class="line"><span class="keyword">private</span> IBService _IBService;</span><br><span class="line"></span><br><span class="line"><span class="comment">//並將這幾個寫在建構式中</span></span><br><span class="line"><span class="keyword">this</span>._IARepo= (IARepo) Activator.CreateInstance(MyContainerSingleton.GetInstance().IARepo);</span><br><span class="line"><span class="keyword">this</span>._IBRepo= (IBRepo) Activator.CreateInstance(MyContainerSingleton.GetInstance().IBRepo);</span><br><span class="line"><span class="keyword">this</span>._IAService= (IAService) Activator.CreateInstance(MyContainerSingleton.GetInstance().IAService);</span><br><span class="line"><span class="keyword">this</span>._IBService= (IBService) Activator.CreateInstance(MyContainerSingleton.GetInstance().IBService);</span><br></pre></td></tr></table></figure>
+
+<p>這樣一來我們就能讓程式碼透過建構式，動態實例應該要實例的東西，如果哪天老闆要我們把IARepo的ARepo換成ARepoV2，我們也只需要去修改MyContainerSingleton中的對應關係就好:</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.IARepo = <span class="keyword">typeof</span>(ARepoV2);</span><br></pre></td></tr></table></figure>
+
+<p>當然啦，現在有許多程式語言都支持依賴注入，其本身也都有強大又方便的語法，而且支援各種不同的依賴注入，所以如果真的需要，就用它們的就好了！</p>
+<p>畢竟我們實作的例子，有幾個限制:</p>
+<ul>
+<li>這個是Thread-unsafe的單例寫法</li>
+<li>用了C#中的反射，如果使用的程式語言不支援反射，就寫不起來</li>
+<li>寫起來不像 .NET Core的依賴注入那樣優雅精美</li>
+</ul>
+<p>所以還是要好好評估專案的需求，選擇適當的工具喔！</p>
+<h2 id="三、結語"><a href="#三、結語" class="headerlink" title="三、結語"></a>三、結語</h2><p>寫這一篇其實有個背景，當時我使用 .NET Framework開發專案，要知道Framework不像Core這麼全面支援依賴注入，那時候我就找了幾個工具但通通用不好，只好索性寫一個簡單的小容器。畢竟殺雞焉用牛刀，我不需要那些多餘的功能，而在當今程式輕量化開發的主流下，能解決問題當然是越簡單越好！</p>
+<p>畢竟老闆又沒多給我錢，我不用拚了老命寫一個依賴注入的工具給他對吧XD</p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/MyBlog/posts/2e7b61d5/"
+      title="【少女歌劇】彼此的追逐與彼此的陪伴"
+     >
+
+    <p class="title-text">
+      
+        【少女歌劇】彼此的追逐與彼此的陪伴
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+ 
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2023 Tsubame<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn" onclick="topFunction()">
+        <span class="material-symbols-rounded">keyboard_arrow_up</span>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.style.opacity = 1;
+        } else {
+            btn.style.opacity = 0;
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/MyBlog/js/light-dark-switch.js"></script>
+</body>
+</html>
