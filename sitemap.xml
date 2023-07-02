@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://bensontien.github.io/MyBlog/posts/9868edeb/</loc>
+    
+    <lastmod>2023-07-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://bensontien.github.io/MyBlog/posts/2c30fb46/</loc>
     
     <lastmod>2023-06-12</lastmod>
@@ -103,7 +112,7 @@
 
   <url>
     <loc>https://bensontien.github.io/MyBlog</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -111,105 +120,126 @@
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/C/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E4%BE%9D%E8%B3%B4%E6%B3%A8%E5%85%A5/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/Dependency-Injection/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E5%85%AC%E5%91%8A/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E5%8B%95%E6%BC%AB%E6%96%87%E5%8C%96/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E7%99%BE%E5%90%88/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E7%99%BE%E5%90%88%E4%BD%9C%E5%93%81%E5%8F%97%E7%9C%BE/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E5%B0%91%E5%A5%B3%E6%AD%8C%E5%8A%87/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E5%8F%A4%E5%B7%9D%E7%9F%A5%E5%AE%8F/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E5%A5%B3%E5%90%8C%E6%96%87%E5%AD%B8/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E6%95%99%E6%9C%83%E5%AD%B8%E6%A0%A1/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/S%E5%B0%8F%E8%AA%AA/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/tags/%E8%BB%8D%E6%AD%A6%E5%B0%91%E5%A5%B3/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://bensontien.github.io/MyBlog/tags/%E4%BB%A3%E8%B3%BC%E5%BF%83%E5%BE%97/</loc>
+    <lastmod>2023-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://bensontien.github.io/MyBlog/tags/Buyee/</loc>
+    <lastmod>2023-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://bensontien.github.io/MyBlog/tags/MANDARAKE/</loc>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -218,42 +248,56 @@
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/categories/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/categories/%E5%85%AC%E5%91%8A/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/categories/%E7%99%BE%E5%90%88/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/categories/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/categories/%E7%99%BE%E5%90%88/%E5%B0%91%E5%A5%B3%E6%AD%8C%E5%8A%87/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://bensontien.github.io/MyBlog/categories/%E7%99%BE%E5%90%88/%E7%99%BE%E5%90%88%E9%87%8B%E7%96%91/</loc>
-    <lastmod>2023-06-18</lastmod>
+    <lastmod>2023-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://bensontien.github.io/MyBlog/categories/%E5%85%B6%E4%BB%96/</loc>
+    <lastmod>2023-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://bensontien.github.io/MyBlog/categories/%E5%85%B6%E4%BB%96/%E4%BB%A3%E8%B3%BC/</loc>
+    <lastmod>2023-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
