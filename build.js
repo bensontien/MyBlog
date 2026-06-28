@@ -606,14 +606,9 @@ function build() {
     }
   }
 
-  // Create a symlink named MyBlog pointing to '.' inside public folder for local preview compatibility
-  const symlinkPath = path.join(publicDir, 'MyBlog');
-  try {
-    fs.symlinkSync('.', symlinkPath, 'dir');
-    console.log('Created local preview symlink public/MyBlog -> .');
-  } catch (err) {
-    // Ignore errors
-  }
+  // Create .nojekyll file to tell GitHub Pages to bypass Jekyll processing
+  fs.writeFileSync(path.join(publicDir, '.nojekyll'), '');
+  console.log('Created .nojekyll file in public directory.');
 
   console.log('Build completed successfully!');
 }
