@@ -225,7 +225,7 @@
             </div>
           </div>
           <div class="wordcount need-seperator meta-info">
-            1.1k 詞
+            1.2k 詞
           </div>
         </div>
         
@@ -248,11 +248,10 @@
 <p>而我個人認為「依賴注入」的精華就在於「建立鬆動的關係」，那麼依循這個概念，我們其實也不用寫得非常複雜，也能建立有著依賴注入精神的程式碼。</p>
 <h2>二、實作</h2>
 <p>我們這邊用C#做舉例，在這例子中，我們有兩個Repo類別、兩個Service類別，一般來說如果我們想要在程式碼中使用這四個類別，我們會這樣寫:</p>
-<pre><code class="language-c#">
-ARepo aRepo = new
-BRepo aRepo = new
-AService aService = new
-BService aService = new
+<pre><code class="language-c#">ARepo aRepo = new ARepo(); 
+BRepo aRepo = new BRepo(); 
+AService aService = new AService(); 
+BService aService = new BService();
 </code></pre>
 <p>這是我們平常依賴實例的寫法，比較複雜一點的話可能會用到多型，但都是依賴著某個實例。</p>
 <p>接著我們就會在程式碼中使用這幾個類別中的Method做我們想要做的事情，而當這幾個類別常常被實例在不同地方時，我們會發現怎麼好像到處都在new，不過不影響程式運行所以就不管了。</p>
@@ -261,75 +260,75 @@ BService aService = new
 <p>那麼能不能有個小容器，能讓我們儲存這幾個類別的關係，然後讓我們需要更替類別時，只要更換容器裡面的關係就可以了?</p>
 <p>這時候就得請出我們的老面孔 <strong>介面(Interface)</strong> 了。首先我們得先為原本的類別建立介面，分別為IARepo、IBRepo、IAService、IBService。</p>
 <p>接著寫一個簡單的小容器:</p>
-<pre><code class="language-c#">namespace
+<pre><code class="language-c#">namespace ProjectA.Tools
 {
 
-    ///
-    ///
-    public
+    /// &lt;summary&gt;
+    /// &lt;/summary&gt;
+    public sealed class MyContainerSingleton
     {
-        private
+        private static MyContainerSingleton uniqueInstance;
 
         //Repo
-        ///
-        ///
-        ///
-        public
-        ///
-        ///
-        ///
-        public
+        /// &lt;summary&gt;
+        /// A的Repo介面
+        /// &lt;/summary&gt;
+        public Type IARepo;
+        /// &lt;summary&gt;
+        /// B的Repo介面
+        /// &lt;/summary&gt;
+        public Type IBRepo;
 
         //Service
-        ///
-        ///
-        ///
-        public
-        ///
-        ///
-        ///
-        public
+        /// &lt;summary&gt;
+        /// A的Service介面
+        /// &lt;/summary&gt;
+        public Type IAService;
+        /// &lt;summary&gt;
+        /// B的Service介面
+        /// &lt;/summary&gt;
+        public Type IBService;
 
-        private
+
+        private MyContainerSingleton()
         {
             //Repo
-            this
-            this
+            this.IARepo = typeof(ARepo);
+            this.IBRepo = typeof(BRepo);
 
             //Service
-            this
-            this
+            this.IAService = typeof(AService);
+            this.IBService = typeof(BService);
         }
 
-        ///
-        ///
-        ///
-        public
+        /// &lt;summary&gt;
+        /// 提供單例
+        /// &lt;/summary&gt;
+        public static MyContainerSingleton GetInstance()
         {
-            if
+            if (uniqueInstance == null)
             {
-                uniqueInstance = new
+                uniqueInstance = new MyContainerSingleton();
             }
-            return
+            return uniqueInstance;
         }
     }
 }
 </code></pre>
 <p>我們透過MyContainerSingleton建立了介面與類別的關係，並且提供單例，不讓程式碼實例一堆重複的東西。接著我們就在原先使用這幾個類別的程式碼中，改寫成下列的樣子:</p>
-<pre><code class="language-c#">
-private
-private
-private
-private
+<pre><code class="language-c#">private IARepo _IARepo;
+private IBRepo _IBRepo;
+private IAService _IAService;
+private IBService _IBService;
 
 //並將這幾個寫在建構式中
-this
-this
-this
-this
+this._IARepo= (IARepo) Activator.CreateInstance(MyContainerSingleton.GetInstance().IARepo);
+this._IBRepo= (IBRepo) Activator.CreateInstance(MyContainerSingleton.GetInstance().IBRepo);
+this._IAService= (IAService) Activator.CreateInstance(MyContainerSingleton.GetInstance().IAService);
+this._IBService= (IBService) Activator.CreateInstance(MyContainerSingleton.GetInstance().IBService);
 </code></pre>
 <p>這樣一來我們就能讓程式碼透過建構式，動態實例應該要實例的東西，如果哪天老闆要我們把IARepo的ARepo換成ARepoV2，我們也只需要去修改MyContainerSingleton中的對應關係就好:</p>
-<pre><code class="language-c#">this
+<pre><code class="language-c#">this.IARepo = typeof(ARepoV2);
 </code></pre>
 <p>當然啦，現在有許多程式語言都支持依賴注入，其本身也都有強大又方便的語法，而且支援各種不同的依賴注入，所以如果真的需要，就用它們的就好了！</p>
 <p>畢竟我們實作的例子，有幾個限制:</p>
