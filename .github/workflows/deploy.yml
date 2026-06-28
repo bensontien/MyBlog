@@ -7,6 +7,9 @@ on:
       - master
       - migration-ssg # Allow testing deployment from the migration branch
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
