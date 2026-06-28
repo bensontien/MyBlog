@@ -183,7 +183,7 @@ function build() {
   <div class="widget-wrap">
     <div class="info-card">
       <div class="avatar">
-        <image src="/MyBlog/images/avatar2022.png"></image>
+        <image src="/MyBlog/images/avatar2026.png"></image>
         <div class="img-dim"></div>
       </div>
       <div class="info">
