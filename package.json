@@ -1,0 +1,14 @@
+{
+  "name": "tsubame-blog-ssg",
+  "version": "1.0.0",
+  "description": "A lightweight, custom Static Site Generator for Tsubame Blog",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "preview": "python3 -m http.server -d public 8000"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "marked": "^4.3.0"
+  }
+}

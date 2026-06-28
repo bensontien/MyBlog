@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="/MyBlog/fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="/MyBlog/fontawesome/css/brands.css" rel="stylesheet">
+<link href="/MyBlog/fontawesome/css/solid.css" rel="stylesheet">
+<script src="/MyBlog/js/color.global.min.js" ></script>
+<script src="/MyBlog/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="{{ description }}">
+  {{ og_meta }}
+  <link rel="alternate" href="/MyBlog/" title="Tsubame 圖文窩" >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  <link rel="stylesheet" href="/MyBlog/css/style.css">
+  <meta name="google-site-verification" content="aqsfzf-v0RqK0UjgZELfedhmmhqRD4YUH7RHzeBEFZc" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EFGFLKCGYD"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-EFGFLKCGYD');
+  </script>
+</head>
+<body>
+  <div id="banner" class="{{ banner_class }}">
+    <img src="/MyBlog/images/banner2023.jpg" itemprop="image">
+    <div id="banner-dim"></div>
+  </div>
+  
+  <div id="main-grid" class="shadow">
+    <div id="nav" class="{{ nav_class }}">
+      <navbar id="navbar">
+        <nav id="title-nav">
+          <a href="/MyBlog/">
+            <div id="vivia-logo">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <div>Tsubame 圖文窩 </div>
+          </a>
+        </nav>
+        <nav id="main-nav">
+          <a class="main-nav-link" href="/MyBlog/index">Home</a>
+          <a class="main-nav-link" href="/MyBlog/archives">Archives</a>
+          <a class="main-nav-link" href="/MyBlog/about">About</a>
+        </nav>
+        <nav id="sub-nav">
+          <a id="theme-btn" class="nav-icon">
+            <span class="material-symbols-rounded light-mode-icon">wb_sunny</span>
+            <span class="material-symbols-rounded dark-mode-icon">dark_mode</span>
+          </a>
+          <a id="nav-rss-link" class="nav-icon mobile-hide" href="/MyBlog/" title="RSS Feed">
+            <span class="material-symbols-rounded rss">rss_feed</span>
+          </a>
+          <a id="nav-search-btn" class="nav-icon" title="搜尋" style="display: none;">
+            <span class="material-symbols-rounded">search</span>
+          </a>
+          <div id="nav-menu-btn" class="nav-icon">
+            <span class="material-symbols-rounded">menu</span>
+          </div>
+        </nav>
+      </navbar>
+      
+      <div id="nav-dropdown" class="hidden">
+        <div id="dropdown-link-list">
+          <a class="nav-dropdown-link" href="/MyBlog/index">Home</a>
+          <a class="nav-dropdown-link" href="/MyBlog/archives">Archives</a>
+          <a class="nav-dropdown-link" href="/MyBlog/about">About</a>
+          <a class="nav-dropdown-link" href="/MyBlog/" title="RSS Feed">RSS</a>
+        </div>
+      </div>
+      
+      <script>
+        let dropdownBtn = document.getElementById("nav-menu-btn");
+        let dropdownEle = document.getElementById("nav-dropdown");
+        dropdownBtn.onclick = function() {
+          dropdownEle.classList.toggle("hidden");
+        }
+      </script>
+    </div>
+    
+    <div id="sidebar-wrapper">
+      {{ sidebar }}
+    </div>
+    
+    <div id="content-body">
+      {{ content }}
+    </div>
+    
+    <div id="footer-wrapper">
+      <footer id="footer">
+        <div id="footer-info" class="inner">
+          &copy; 2023 Tsubame<br>
+          Powered by HTML+CSS+JS & Theme <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+        </div>
+      </footer>
+    </div>
+    
+    <div class="back-to-top-wrapper">
+      <button id="back-to-top-btn" class="back-to-top-btn" onclick="topFunction()">
+        <span class="material-symbols-rounded">keyboard_arrow_up</span>
+      </button>
+    </div>
+    
+    <script>
+        function topFunction() {
+            window.scroll({ top: 0, behavior: 'smooth' });
+        }
+        let btn = document.getElementById('back-to-top-btn');
+        function scrollFunction() {
+            if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+                btn.style.opacity = 1;
+            } else {
+                btn.style.opacity = 0;
+            }
+        }
+        window.onscroll = function() {
+            scrollFunction();
+        }
+    </script>
+  </div>
+  
+  <script src="/MyBlog/js/light-dark-switch.js"></script>
+  <script src="/MyBlog/js/jquery-3.4.1.min.js"></script>
+  <script src="/MyBlog/js/script.js"></script>
+</body>
+</html>

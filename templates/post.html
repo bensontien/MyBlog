@@ -1,0 +1,38 @@
+<article id="post-{{ id }}" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        <div class="main-title-bar">
+          <div class="main-title-dot"></div>
+          <h1 class="p-name article-title" itemprop="headline name">
+            {{ title }}
+          </h1>
+        </div>
+        
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+            <time class="dt-published" datetime="{{ date_iso }}" itemprop="datePublished">{{ date_formatted }}</time>
+          </div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+              {{ categories }}
+            </div>
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            {{ word_count }} 詞
+          </div>
+        </div>
+        
+        <ul class="article-tag-list" itemprop="keywords">
+          {{ tags }}
+        </ul>
+      </header>
+      
+      <div class="e-content article-entry" itemprop="articleBody">
+        {{ body }}
+      </div>
+    </div>
+  </div>
+  
+  {{ nav }}
+</article>
